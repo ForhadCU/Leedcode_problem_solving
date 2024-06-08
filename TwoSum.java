@@ -2,21 +2,17 @@ import java.util.HashMap;
 
 class TwoSum {
     public int[] twoSum(int[] nums, int target) {
-        // Using two pass hashTable
+        // Using one pass hashTable
         HashMap<Integer, Integer> hMap = new HashMap<>();
-
-        // place all the value in hashmap as numbers are key and indices are values
-        for (int i = 0; i < nums.length; i++) {
-            hMap.put(nums[i], i);
-        }
 
         // generate output
         for (int i = 0; i < nums.length; i++) {
             int complement = target - nums[i];
-            if (hMap.containsKey(complement) && hMap.get(complement) != i) {
+            if (hMap.containsKey(complement)) {
                 System.out.println(i + " "+ hMap.get(complement));
                 return new int[] { i, hMap.get(complement), };
             }
+            hMap.put(nums[i], i);
         }
 
         return new int[] {};
