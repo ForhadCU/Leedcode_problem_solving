@@ -23,22 +23,20 @@ public class RomanToInteger {
         hMap.put("M", 1000);
 
         for (int i = 0; i < s.length(); i++) {
-            if (i == s.length() - 1) {
-                sum = sum + hMap.get(Character.toString(s.charAt(i)));
+            currentID = hMap.get(Character.toString(s.charAt(i)));
 
-            } else {
-                currentID = hMap.get(Character.toString(s.charAt(i)));
-                nextID = hMap.get(Character.toString(s.charAt(i + 1)));
-                // for normal case of Roman DIGIT sequence
-                if (currentID >= nextID) {
-                    sum += currentID;
-                }
-                // for exceptional case of Roman DIGIT sequence such as IV, XL..
-                else {
-                    sum += (nextID - currentID);
-                    // skip the next index
-                    i++;
-                }
+            /*
+             * nextID = hMap.get(Character.toString(s.charAt(i + 1)));
+             */
+            // for normal case of Roman DIGIT sequence
+            if (i < s.length() - 1
+                    && hMap.get(Character.toString(s.charAt(i))) < hMap.get(Character.toString(s.charAt(i + 1)))) {
+                sum -= currentID;
+            }
+            // for exceptional case of Roman DIGIT sequence such as IV, XL..
+            else {
+                sum += currentID;
+
             }
         }
 
@@ -47,7 +45,7 @@ public class RomanToInteger {
 
     public static void main(String[] args) {
         RomanToInteger romanToInteger = new RomanToInteger();
-        String s = "III";
+        String s = "MCMXCIV";
         int output = romanToInteger.romanToInt(s);
         System.out.println(output);
 
